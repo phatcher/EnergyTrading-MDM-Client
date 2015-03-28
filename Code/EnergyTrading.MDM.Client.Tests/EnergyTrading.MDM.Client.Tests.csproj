@@ -46,7 +46,7 @@
     </Reference>
     <Reference Include="EnergyTrading.MDM.Contracts, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EnergyTrading.MDM.Contracts.3.2.1.10\lib\net35\EnergyTrading.MDM.Contracts.dll</HintPath>
+      <HintPath>..\packages\EnergyTrading.MDM.Contracts.3.2.1.14\lib\net35\EnergyTrading.MDM.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="EnergyTrading.Test">
       <HintPath>..\packages\EnergyTrading.Test.2.8.1.112\lib\net40\EnergyTrading.Test.dll</HintPath>
