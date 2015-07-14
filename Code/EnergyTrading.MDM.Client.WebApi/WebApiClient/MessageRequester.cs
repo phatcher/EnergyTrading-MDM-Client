@@ -1,14 +1,5 @@
 ﻿namespace EnergyTrading.Mdm.Client.WebApi.WebApiClient
 {
-    using EnergyTrading;
-    using EnergyTrading.Contracts.Search;
-    using EnergyTrading.Extensions;
-    using EnergyTrading.Logging;
-    using EnergyTrading.Mdm.Client.Constants;
-    using EnergyTrading.Mdm.Client.Extensions;
-    using EnergyTrading.Mdm.Client.WebClient;
-    using EnergyTrading.Mdm.Contracts;
-    using Microsoft.Practices.Unity;
     using System;
     using System.Collections.Generic;
     using System.Configuration;
@@ -21,12 +12,23 @@
     using System.ServiceModel.Syndication;
     using System.Xml;
 
+    using EnergyTrading;
+    using EnergyTrading.Contracts.Search;
+    using EnergyTrading.Extensions;
+    using EnergyTrading.Logging;
+    using EnergyTrading.Mdm.Client.Constants;
+    using EnergyTrading.Mdm.Client.Extensions;
+    using EnergyTrading.Mdm.Client.WebClient;
+    using EnergyTrading.Mdm.Contracts;
+
+    using Microsoft.Practices.Unity;
+
     /// <summary>
     /// Implements a IMessageRequester using IHttpClientFactory.
     /// </summary>
     public class MessageRequester : IMessageRequester
     {
-        private readonly static ILogger Logger = LoggerFactory.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILogger Logger = LoggerFactory.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly IHttpClientFactory httpClientFactory;
         private readonly IFaultHandler faultHandler;
@@ -44,13 +46,13 @@
             this.faultHandler = faultHandler;
         }
 
-        /// <copydocfrom cref="IMessageRequester.Create{T}" />
+        /// <copydocfrom cref="IMessageRequester.Create{T}(string, T)" />
         public WebResponse<TMessage> Create<TMessage>(string uri, TMessage message)
         {
             return Create(uri, message, null);
         }
 
-        /// <copydocfrom cref="IMessageRequester.Delete{T}" />
+        /// <copydocfrom cref="IMessageRequester.Delete{T}(string)" />
         public WebResponse<TMessage> Delete<TMessage>(string uri)
         {
             return Delete<TMessage>(uri, null);
@@ -163,7 +165,7 @@
             return result;
         }
 
-        /// <copydocfrom cref="IMessageRequester.Update{T}" />
+        /// <copydocfrom cref="IMessageRequester.Update{T}(string, string, T)" />
         public WebResponse<TMessage> Update<TMessage>(string uri, string etag, TMessage message)
         {
             return Update(uri, etag, message, null);

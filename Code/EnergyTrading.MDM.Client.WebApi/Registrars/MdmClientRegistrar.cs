@@ -1,19 +1,17 @@
-﻿using EnergyTrading.Caching.InMemory.Registrars;
+﻿using System.Configuration;
+
+using EnergyTrading.Caching;
+using EnergyTrading.Caching.InMemory.Registrars;
+using EnergyTrading.Container.Unity;
+using EnergyTrading.Mdm.Client.Services;
+using EnergyTrading.Mdm.Client.WebApi.WebApiClient;
+using EnergyTrading.Mdm.Client.WebClient;
+using EnergyTrading.Mdm.Contracts;
+
+using Microsoft.Practices.Unity;
 
 namespace EnergyTrading.Mdm.Client.WebApi.Registrars
 {
-    using System.Configuration;
-    using System.Linq;
-
-    using EnergyTrading.Caching;
-    using EnergyTrading.Container.Unity;
-    using EnergyTrading.Mdm.Client.Services;
-    using EnergyTrading.Mdm.Client.WebApi.WebApiClient;
-    using EnergyTrading.Mdm.Client.WebClient;
-    using EnergyTrading.Mdm.Contracts;
-
-    using Microsoft.Practices.Unity;
-
     public class MdmClientRegistrar : IContainerRegistrar
     {
         public virtual int MdmCacheTimeout
@@ -47,7 +45,7 @@ namespace EnergyTrading.Mdm.Client.WebApi.Registrars
             container.RegisterType<IHttpClientFactory, HttpClientFactory>();
 
 
-            //Register Cache service
+            // Register Cache service
             InMemoryCacheRegistrar.Register(container);
             container.RegisterType<IMdmClientCacheRepository, DefaultMdmClientCacheRepository>();
 
@@ -55,9 +53,9 @@ namespace EnergyTrading.Mdm.Client.WebApi.Registrars
             container.RegisterType<IMessageRequester, MessageRequester>();
 
             // MDM Entity Services
-            this.RegisterMdmService<SourceSystem>(container, "sourcesystem");
-            this.RegisterEntityServices(container);
-            this.RegisterReferenceDataService(container);
+            RegisterMdmService<SourceSystem>(container, "sourcesystem");
+            RegisterEntityServices(container);
+            RegisterReferenceDataService(container);
 
             // MDM Client service
             container.RegisterType<IMdmEntityServiceFactory, LocatorMdmEntityServiceFactory>();
@@ -71,7 +69,7 @@ namespace EnergyTrading.Mdm.Client.WebApi.Registrars
 
             container.RegisterType<IMdmModelEntityService, MdmModelEntityService>();
             container.RegisterType<IMdmModelEntityServiceFactory, LocatorMdmModelEntityServiceFactory>();
-            this.RegisterModelEntityServices(container);
+            RegisterModelEntityServices(container);
         }
 
         protected virtual void RegisterEntityServices(IUnityContainer container)
@@ -85,7 +83,7 @@ namespace EnergyTrading.Mdm.Client.WebApi.Registrars
         protected virtual void RegisterMdmService<T>(IUnityContainer container, string url, uint version = 0)
             where T : class, IMdmEntity
         {
-            if (this.MdmCaching)
+            if (MdmCaching)
             {
                 var cachekey = "Mdm." + typeof(T).Name + (version > 0 ? "V" + version : string.Empty);
 
@@ -93,9 +91,9 @@ namespace EnergyTrading.Mdm.Client.WebApi.Registrars
 
                 // url is different for different versions so can still use it here
                 container.RegisterType<IMdmEntityService<T>, MdmEntityService<T>>(
-                    url,
+                    url, 
                     new InjectionConstructor(
-                        this.BaseUri + "/" + url,
+                        BaseUri + "/" + url, 
                         new ResolvedParameter<IMessageRequester>()));
 
                 // Singleton as we have a cache but named according to version if necessary
@@ -112,11 +110,11 @@ namespace EnergyTrading.Mdm.Client.WebApi.Registrars
             {
                 if (version == 0)
                 {
-                    container.RegisterType<IMdmEntityService<T>, MdmEntityService<T>>(new InjectionConstructor(this.BaseUri + "/" + url, new ResolvedParameter<IMessageRequester>()));
+                    container.RegisterType<IMdmEntityService<T>, MdmEntityService<T>>(new InjectionConstructor(BaseUri + "/" + url, new ResolvedParameter<IMessageRequester>()));
                 }
                 else
                 {
-                    container.RegisterType<IMdmEntityService<T>, MdmEntityService<T>>("V" + version, new InjectionConstructor(this.BaseUri + "/" + url, new ResolvedParameter<IMessageRequester>()));
+                    container.RegisterType<IMdmEntityService<T>, MdmEntityService<T>>("V" + version, new InjectionConstructor(BaseUri + "/" + url, new ResolvedParameter<IMessageRequester>()));
                 }
 
             }
@@ -125,7 +123,7 @@ namespace EnergyTrading.Mdm.Client.WebApi.Registrars
         protected virtual void RegisterReferenceDataService(IUnityContainer container)
         {
             container.RegisterType<IReferenceDataService, ReferenceDataService>(
-                new InjectionConstructor(this.BaseUri + "/referencedata", new ResolvedParameter<IMessageRequester>()));
+                new InjectionConstructor(BaseUri + "/referencedata", new ResolvedParameter<IMessageRequester>()));
         }
     }
 }

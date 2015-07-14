@@ -1,15 +1,14 @@
-﻿namespace EnergyTrading.Mdm.Client.IntegrationTests.Checkers
-{
-    using EnergyTrading.Mdm.Contracts;
-    using EnergyTrading.Test;
+﻿using EnergyTrading.Mdm.Contracts;
 
-    public class MdmIdChecker : Checker<MdmId>
+namespace EnergyTrading.Mdm.Client.IntegrationTests.Checkers
+{
+    public class MdmIdChecker : NCheck.Checker<MdmId>
     {
         public MdmIdChecker()
         {
-            this.Compare(x => x.SystemId);
-            this.Compare(x => x.SystemName);
-            this.Compare(x => x.Identifier);
+            Compare(x => x.SystemId);
+            Compare(x => x.SystemName);
+            Compare(x => x.Identifier);
         }
     }
 }
