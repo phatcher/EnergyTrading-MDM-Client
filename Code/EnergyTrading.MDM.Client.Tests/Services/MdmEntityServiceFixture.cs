@@ -5,6 +5,7 @@ namespace EnergyTrading.Mdm.Client.Tests.Services
     using System;
     using System.Net;
 
+    using EnergyTrading.Mdm.Client.Constants;
     using EnergyTrading.Mdm.Client.Services;
     using EnergyTrading.Mdm.Client.WebClient;
     using EnergyTrading.Mdm.Contracts;
@@ -64,7 +65,7 @@ namespace EnergyTrading.Mdm.Client.Tests.Services
                 },
                 Identifiers = new MdmIdList
                 {
-                    new MdmId { SystemName = "Nexus", Identifier = "1", IsMdmId = true},
+                    new MdmId { SystemName = MdmConstants.MdmName, Identifier = "1", IsMdmId = true},
                     new MdmId { SystemName = "Trayport", Identifier = "A"},
                     new MdmId { SystemName = "Endur", Identifier = "B"},
                 }
@@ -99,7 +100,7 @@ namespace EnergyTrading.Mdm.Client.Tests.Services
                 },
                 Identifiers = new MdmIdList
                 {
-                    new MdmId { SystemName = "Nexus", Identifier = "1", IsMdmId = true},
+                    new MdmId { SystemName = MdmConstants.MdmName, Identifier = "1", IsMdmId = true},
                     new MdmId { SystemName = "Trayport", Identifier = "A"},
                     new MdmId { SystemName = "Endur", Identifier = "B"},
                 }
@@ -137,7 +138,7 @@ namespace EnergyTrading.Mdm.Client.Tests.Services
                 },
                 Identifiers = new MdmIdList
                 {
-                    new MdmId { SystemName = "Nexus", Identifier = "1", IsMdmId = true},
+                    new MdmId { SystemName = MdmConstants.MdmName, Identifier = "1", IsMdmId = true},
                     new MdmId { SystemName = "Trayport", Identifier = "A"},
                     new MdmId { SystemName = "Endur", Identifier = "B"},
                 }
@@ -307,7 +308,7 @@ namespace EnergyTrading.Mdm.Client.Tests.Services
                 },
                 Identifiers = new MdmIdList
                 {
-                    new MdmId { SystemName = "Nexus", Identifier = "1", IsMdmId = true},
+                    new MdmId { SystemName = MdmConstants.MdmName, Identifier = "1", IsMdmId = true},
                     tpIdentifier,
                     new MdmId { SystemName = "Endur", Identifier = "B"},
                 }
@@ -368,7 +369,7 @@ namespace EnergyTrading.Mdm.Client.Tests.Services
                 },
                 Identifiers = new MdmIdList
                 {
-                    new MdmId { SystemName = "Nexus", Identifier = "1", IsMdmId = true},
+                    new MdmId { SystemName = MdmConstants.MdmName, Identifier = "1", IsMdmId = true},
                     tpIdentifier,
                     new MdmId { SystemName = "Endur", Identifier = "B"},
                 }

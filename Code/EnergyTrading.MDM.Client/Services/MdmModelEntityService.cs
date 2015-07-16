@@ -26,10 +26,10 @@
         {
             this.factory = factory;
             this.mdmService = mdmService;
-            this.entityLocatorService = locatorService;
+            entityLocatorService = locatorService;
         }
 
-        /// <copydocfrom cref="IMdmModelEntityService.Get{T}(int)" />
+        /// <copydocfrom cref="IMdmModelEntityService.Get{T}(int, uint)" />
         public TContract Get<TContract>(int id, uint version = 0) 
             where TContract : IMdmEntity
         {
@@ -38,15 +38,15 @@
                 return default(TContract);
             }
 
-            Func<WebResponse<TContract>> x = () => this.mdmService.Get<TContract>(id, version);
+            Func<WebResponse<TContract>> x = () => mdmService.Get<TContract>(id, version);
             return x.Retry();
         }
 
-        /// <copydocfrom cref="IMdmModelEntityService.Get{T}(MdmId)" />
+        /// <copydocfrom cref="IMdmModelEntityService.Get{T}(MdmId, uint)" />
         public TContract Get<TContract>(MdmId id, uint version = 0) 
             where TContract : IMdmEntity
         {
-            return this.entityLocatorService.Get<TContract>(id, version);
+            return entityLocatorService.Get<TContract>(id, version);
         }
 
         /// <copydocfrom cref="IMdmModelEntityService.Get{T, U}" />
@@ -56,14 +56,14 @@
         {
             return contract == null 
                 ? default(TModel) 
-                : this.factory.ModelService<TContract, TModel>(version).Get(contract);
+                : factory.ModelService<TContract, TModel>(version).Get(contract);
         }
 
         /// <copydocfrom cref="IMdmModelEntityService.Search{T}" />
         public WebResponse<IList<TContract>> Search<TContract>(Search search, uint version = 0)
             where TContract : IMdmEntity
         {
-            return this.mdmService.Search<TContract>(search, version);
+            return mdmService.Search<TContract>(search, version);
         }
     }
 }

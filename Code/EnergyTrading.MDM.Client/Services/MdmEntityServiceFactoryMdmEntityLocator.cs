@@ -10,12 +10,12 @@
         where TContract : class, IMdmEntity
     {
         /// <summary>
-        /// Create a new instance of the <see cref="MdmServiceMdmEntityLocator{T}"/> class.
+        /// Create a new instance of the <see cref="MdmEntityServiceFactoryMdmEntityLocator{T}"/> class.
         /// </summary>
-        /// <param name="service"></param>
+        /// <param name="factory"></param>
         public MdmEntityServiceFactoryMdmEntityLocator(IMdmEntityServiceFactory factory)
         {
-            this.Factory = factory;
+            Factory = factory;
         }
 
         /// <summary>
@@ -26,7 +26,7 @@
         /// <copydocfrom cref="IMdmEntityLocator{T}.Get" />
         public TContract Get(MdmId id, uint version = 0)
         {
-            return WebResponseUtility.Retry(() => this.Factory.EntityService<TContract>(version).Get(id));
+            return WebResponseUtility.Retry(() => Factory.EntityService<TContract>(version).Get(id));
         }
     }
 }

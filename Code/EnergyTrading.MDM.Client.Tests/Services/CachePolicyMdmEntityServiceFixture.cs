@@ -8,6 +8,7 @@ namespace EnergyTrading.Mdm.Client.Tests.Services
 
     using EnergyTrading.Caching;
     using EnergyTrading.Configuration;
+    using EnergyTrading.Mdm.Client.Constants;
     using EnergyTrading.Mdm.Client.Services;
     using EnergyTrading.Mdm.Client.WebClient;
     using EnergyTrading.Mdm.Contracts;
@@ -36,7 +37,7 @@ namespace EnergyTrading.Mdm.Client.Tests.Services
             var locationEntityService = new CachePolicyMdmEntityService<SourceSystem>(mockMdmEntityService.Object, cachePolicyFactory, inmemoryCacheRepo);
             var location = new SourceSystem
             {
-                Identifiers = new MdmIdList { new MdmId { SystemName = "Nexus", Identifier = "1", IsMdmId = true } },
+                Identifiers = new MdmIdList { new MdmId { SystemName = MdmConstants.MdmName, Identifier = "1", IsMdmId = true } },
                 Details = new SourceSystemDetails { Name = "Blah" }
             };
 
@@ -72,7 +73,7 @@ namespace EnergyTrading.Mdm.Client.Tests.Services
             mockConfigManager.Setup(x => x.AppSettings).Returns(new NameValueCollection { { "CacheItemPolicy.Expiration." + CacheKey, "3500" } });
             var cachePolicyFactory = new AbsoluteCacheItemPolicyFactory(CacheKey, mockConfigManager.Object);
             var locationEntityService = new CachePolicyMdmEntityService<SourceSystem>(mockMdmEntityService.Object, cachePolicyFactory,inmemoryCacheRepo);
-            var nexusId = new MdmId { SystemName = "Nexus", Identifier = "1", IsMdmId = true };
+            var nexusId = new MdmId { SystemName = MdmConstants.MdmName, Identifier = "1", IsMdmId = true };
             var location = new SourceSystem
             {
                 Identifiers = new MdmIdList { nexusId },
@@ -112,7 +113,7 @@ namespace EnergyTrading.Mdm.Client.Tests.Services
 
             var cachePolicyFactory = new AbsoluteCacheItemPolicyFactory(CacheKey, mockConfigManager.Object);
             var locationEntityService = new CachePolicyMdmEntityService<SourceSystem>(mockMdmEntityService.Object, cachePolicyFactory,inmemoryCacheRepo);
-            var nexusId = new MdmId { SystemName = "Nexus", Identifier = "1", IsMdmId = true };
+            var nexusId = new MdmId { SystemName = MdmConstants.MdmName, Identifier = "1", IsMdmId = true };
             var adcId = new MdmId { SystemName = "ADC", Identifier = "123", IsMdmId = false };
             var location = new SourceSystem
             {

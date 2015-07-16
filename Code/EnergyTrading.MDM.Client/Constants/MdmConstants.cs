@@ -3,15 +3,16 @@ using System.Configuration;
 
 namespace EnergyTrading.Mdm.Client.Constants
 {
-   /// <summary>
-   /// 
-   /// </summary>
-   public static class MdmConstants
+    public static class MdmConstants
     {
-       public static readonly string MdmRequestHeaderName = "X-MDMREQ-HDR";
-       public static readonly string MdmRequestSourceSystemName = "Mdm:SourceSystem";
+        public static readonly string MdmRequestHeaderName = "X-MDMREQ-HDR";
+        public static readonly string MdmRequestSourceSystemName = "Mdm:SourceSystem";
 
-       public static readonly bool LogResponse =
-           Convert.ToBoolean(ConfigurationManager.AppSettings["LogResponse"] ?? "false");
+        public static readonly bool LogResponse = Convert.ToBoolean(ConfigurationManager.AppSettings["LogResponse"] ?? "false");
+
+        public static string MdmName
+        {
+            get { return ConfigurationManager.AppSettings["Mdm.InternalName"] ?? "Nexus"; }
+        }
     }
 }

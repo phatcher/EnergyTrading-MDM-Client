@@ -14,6 +14,8 @@ using NUnit.Framework;
 
 namespace EnergyTrading.Mdm.Client.Tests.Services
 {
+    using EnergyTrading.Mdm.Client.Constants;
+
     [TestFixture]
     public class MdmCacheServiceFixture
     {
@@ -149,24 +151,23 @@ namespace EnergyTrading.Mdm.Client.Tests.Services
         {
             var sourceSystem = new TContract
             {
-                Identifiers =
-                    new MdmIdList
-                                       {
-                                           new MdmId
-                                           {
-                                               SystemName = "ABC",
-                                               Identifier = Guid.NewGuid().ToString()
-                                           },
-                                           new MdmId
-                                           {
-                                               SystemName = "XYZ",
-                                               Identifier = Guid.NewGuid().ToString()
-                                           },
-                                           new MdmId
-                                           {
-                                               SystemName = "Nexus", Identifier = Guid.NewGuid().GetHashCode().ToString(), IsMdmId = true
-                                           }
-                                       },
+                Identifiers = new MdmIdList
+                {
+                    new MdmId
+                    {
+                        SystemName = "ABC",
+                        Identifier = Guid.NewGuid().ToString()
+                    },
+                    new MdmId
+                    {
+                        SystemName = "XYZ",
+                        Identifier = Guid.NewGuid().ToString()
+                    },
+                    new MdmId
+                    {
+                        SystemName = MdmConstants.MdmName, Identifier = Guid.NewGuid().GetHashCode().ToString(), IsMdmId = true
+                    }
+                },
             };
 
             return sourceSystem;
@@ -183,8 +184,9 @@ namespace EnergyTrading.Mdm.Client.Tests.Services
 
             public void RemoveByValue<T>(T value)
             {
-                (from key in cache where Equals(key.Value, value) select key.Key).ForEach(
-                    key => cache.Remove(key));
+                (from key in cache 
+                 where Equals(key.Value, value) 
+                 select key.Key).ForEach(key => cache.Remove(key));
             }
 
             public InMemoryCacheTestClass() : this(new MemoryCache("Test")) { }
